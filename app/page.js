@@ -27,8 +27,6 @@ export default function Home() {
 
         marks.style('fill-opacity', 0);
 
-        console.log(marks);
-
         marks
             .transition()
             .duration(500)
@@ -46,8 +44,6 @@ export default function Home() {
             simulationTimeStep,
             simulationMonths,
         );
-
-        console.log('my data', myData);
 
         setData(myData);
     }, []);
