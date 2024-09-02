@@ -2,7 +2,7 @@
 import * as Plot from '@observablehq/plot';
 import * as d3 from 'd3';
 import { useRef, useState, useEffect } from 'react';
-import createSimulation from "@/app/helpers/create-simulation";
+import { legendColors, createSimulation } from "@/app/helpers/create-simulation";
 
 export default function Home() {
   const containerRef = useRef();
@@ -13,7 +13,7 @@ export default function Home() {
     const [recoveryTime, setRecoveryTime] = useState(3); // Three months between litters
     const [simulationTimeStep, setSimulationTimeStep] = useState(1);
     const [simulationMonths, setSimulationMonths] = useState(24);
-    const [simulationTNREvents, setSimulationTNREvents] = useState([{ probability: 0.5, time: 1 }]);
+    const [simulationTNREvents, setSimulationTNREvents] = useState([{ probability: 0, time: 12 }]);
 
     // Thanks, Mike Freeman
     const addAnimation = (
@@ -57,17 +57,9 @@ export default function Home() {
             data,
             Plot.groupZ(
                 { y: "count" },
-                { fill: "gender", sort: "gender", fx: "time", unit: 1 }))
+                { fill: "fillColor", sort: "gender", fx: "time", unit: 1 }))
                     .plot({ fx: { interval: 1, label: "Number of Months" }, y: { label: "Number of Cats" }, color: { legend: true } }
         ));
-
-        const cells = document.querySelectorAll('.cell');
-
-        cells.forEach((cell, index) => {
-            setTimeout(() => {
-                cell.classList.add('fade-in');
-            }, index * 100); // Adjust the delay for a smoother effect
-        });
 
         containerRef.current.append(plot);
 
@@ -75,8 +67,18 @@ export default function Home() {
     }, [data]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-24">
-      <div ref={containerRef}></div>
+    <main className="flex min-h-screen flex-col items-center justify-center ">
+        <div className="flex gap-8 mb-8">
+            {Object.entries(legendColors).map(([name, value]) => {
+                return (
+                    <div key={name} className="flex items-center justify-center">
+                        <div className="h-[10px] w-[10px] mr-1" style={{ backgroundColor: value }}></div>
+                        <span className="text-sm text-black">{name}</span>
+                    </div>
+                );
+            })}
+        </div>
+        <div ref={containerRef}></div>
     </main>
   );
 }

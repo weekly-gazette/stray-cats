@@ -1,3 +1,9 @@
+export const legendColors = {
+    'Male': '#D00101',
+    'Female': '#FFBA06',
+    'Fixed': '#042B43',
+};
+
 class CatPopulation {
     constructor(time, cats, timeStep, maturityTime, recoveryTime, litterSize, simulationTNREvents) {
         this.time = time;
@@ -30,7 +36,8 @@ class CatPopulation {
         return this.cats.map((c) => ({
             gender: c.gender,
             isFixed: c.isFixed,
-            time: this.time
+            time: this.time,
+            fillColor: c.isFixed ? legendColors['Fixed'] : legendColors[c.gender],
         }));
     }
 }
@@ -66,11 +73,11 @@ class Cat {
     }
 
     tnr(probability) {
-        this.isFixed = Math.random() < 0.65;
+        this.isFixed = Math.random() < probability;
     }
 }
 
-export default function createSimulation(
+export function createSimulation(
     litterSize,
     maturityTime,
     recoveryTime,
