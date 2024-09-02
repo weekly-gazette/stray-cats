@@ -10,10 +10,10 @@ export default function Home() {
 
     const [litterSize, setLitterSize] = useState(3); // Surviving litter size of 3, though totals can be 7+
     const [maturityTime, setMaturityTime] = useState(6); // Six months of age to reproduce
-    const [recoveryTime, setRecoveryTime] = useState(3); // Three months between litters
+    const [recoveryTime, setRecoveryTime] = useState(6); // Assuming two litters per year
     const [simulationTimeStep, setSimulationTimeStep] = useState(1);
     const [simulationMonths, setSimulationMonths] = useState(24);
-    const [simulationTNREvents, setSimulationTNREvents] = useState([{ probability: 0, time: 12 }]);
+    const [simulationTNREvents, setSimulationTNREvents] = useState([{ probability: 0.75, time: 12 }]);
 
     // Thanks, Mike Freeman
     const addAnimation = (
@@ -58,7 +58,7 @@ export default function Home() {
             Plot.groupZ(
                 { y: "count" },
                 { fill: "fillColor", sort: "gender", fx: "time", unit: 1 }))
-                    .plot({ fx: { interval: 1, label: "Number of Months" }, y: { label: "Number of Cats" }, color: { legend: true } }
+                    .plot({ fx: { interval: 1, label: "Number of Months" }, y: { label: "Number of Cats", domain: [0, 100] }, color: { legend: true } }
         ));
 
         containerRef.current.append(plot);
