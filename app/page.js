@@ -13,7 +13,7 @@ export default function Home() {
     const [recoveryTime, setRecoveryTime] = useState(6); // Assuming two litters per year
     const [simulationTimeStep, setSimulationTimeStep] = useState(1);
     const [simulationMonths, setSimulationMonths] = useState(24);
-    const [simulationTNREvents, setSimulationTNREvents] = useState([{ probability: 0.75, time: 12 }]);
+    const [simulationTNREvents, setSimulationTNREvents] = useState([{ percentage: 0.75, time: 12 }]);
 
     // Thanks, Mike Freeman
     const addAnimation = (

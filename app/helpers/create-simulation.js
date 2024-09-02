@@ -19,11 +19,21 @@ class CatPopulation {
     simulate() {
         const tnrEvent = this.simulationTNREvents.find((e) => e.time === this.time);
 
-        for (const cat of this.cats) {
-            cat.exist();
+        let fixedCatIndices = new Set();
 
-            if (tnrEvent) cat.tnr(tnrEvent.probability);
+        if (tnrEvent) {
+            const sampleSize = Math.floor(tnrEvent.percentage * this.cats.length);
+
+            while (fixedCatIndices.size < sampleSize) {
+                fixedCatIndices.add(Math.floor(Math.random() * this.cats.length));
+            }
         }
+        
+        this.cats.forEach((cat, index) => {
+            if (fixedCatIndices.has(index)) cat.tnr();
+
+            cat.exist();
+        });
 
         this.time += this.timeStep;
     }
@@ -72,8 +82,8 @@ class Cat {
         }
     }
 
-    tnr(probability) {
-        this.isFixed = Math.random() < probability;
+    tnr() {
+        this.isFixed = true;
     }
 }
 
