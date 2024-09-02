@@ -11,8 +11,9 @@ export default function Home() {
     const [litterSize, setLitterSize] = useState(3); // Surviving litter size of 3, though totals can be 7+
     const [maturityTime, setMaturityTime] = useState(6); // Six months of age to reproduce
     const [recoveryTime, setRecoveryTime] = useState(3); // Three months between litters
-    const [simulationTimeStep, setSimulationTimeStep] = useState(3);
+    const [simulationTimeStep, setSimulationTimeStep] = useState(1);
     const [simulationMonths, setSimulationMonths] = useState(24);
+    const [simulationTNREvents, setSimulationTNREvents] = useState([{ probability: 0.5, time: 1 }]);
 
     // Thanks, Mike Freeman
     const addAnimation = (
@@ -43,6 +44,7 @@ export default function Home() {
             recoveryTime,
             simulationTimeStep,
             simulationMonths,
+            simulationTNREvents,
         );
 
         setData(myData);
@@ -56,7 +58,7 @@ export default function Home() {
             Plot.groupZ(
                 { y: "count" },
                 { fill: "gender", sort: "gender", fx: "time", unit: 1 }))
-                    .plot({ fx: { interval: 3, label: "Number of Months" }, y: { label: "Number of Cats" }, color: { legend: true } }
+                    .plot({ fx: { interval: 1, label: "Number of Months" }, y: { label: "Number of Cats" }, color: { legend: true } }
         ));
 
         const cells = document.querySelectorAll('.cell');
@@ -73,7 +75,7 @@ export default function Home() {
     }, [data]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-36">
+    <main className="flex min-h-screen flex-col items-center justify-between pt-24">
       <div ref={containerRef}></div>
     </main>
   );
