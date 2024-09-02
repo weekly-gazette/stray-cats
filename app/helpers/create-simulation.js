@@ -28,12 +28,11 @@ class CatPopulation {
                 fixedCatIndices.add(Math.floor(Math.random() * this.cats.length));
             }
         }
-        
-        this.cats.forEach((cat, index) => {
-            if (fixedCatIndices.has(index)) cat.tnr();
 
-            cat.exist();
-        });
+        for (let i = 0; i < this.cats.length; i++) {
+            if (fixedCatIndices.has(i)) this.cats[i].tnr();
+            this.cats[i].exist();
+        }
 
         this.time += this.timeStep;
     }
